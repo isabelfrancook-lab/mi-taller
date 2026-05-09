@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FF5400">
+<title>21 días — Mi camino continúa</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --naranja:#FF5400;--naranja-light:#FFE8DC;--naranja-dark:#CC4300;
+    --amarillo:#FFBE0B;--amarillo-light:#FFF6D0;--amarillo-dark:#B38000;
+    --violeta:#8338EC;--violeta-light:#EFE0FF;
+    --azul:#3A86FF;--azul-light:#DCEEFF;
+    --negro:#0A0A0A;--fondo:#FFFBF0;--gris:#F0EBE0;--gris2:#D9D2C5;
+    --verde:#00A86B;--verde-light:#D0F5E8;
+  }
+  body{background:var(--fondo);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
+  .wrap{max-width:600px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+
+  .header{text-align:center;margin-bottom:2rem;padding:1.75rem 1.5rem;background:var(--negro);border-radius:16px;}
+  .header h1{font-size:21px;font-weight:500;color:#fff;}
+  .header p{font-size:13px;color:var(--amarillo);margin-top:5px;}
+
+  .progress-wrap{margin-bottom:1.75rem;}
+  .prog-top{display:flex;justify-content:space-between;font-size:12px;color:rgba(10,10,10,.4);margin-bottom:6px;}
+  .prog-top strong{color:var(--naranja);}
+  .prog-bar{height:7px;background:var(--gris);border-radius:4px;overflow:hidden;}
+  .prog-fill{height:100%;background:var(--naranja);border-radius:4px;transition:width .5s;}
+
+  .semana-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:rgba(10,10,10,.35);margin-bottom:.75rem;margin-top:1.5rem;}
+
+  .dias-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:.5rem;}
+  .dia-cell{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;background:var(--gris);transition:transform .1s;-webkit-tap-highlight-color:transparent;}
+  .dia-cell:active{transform:scale(.95);}
+  .dia-cell.locked{opacity:.3;cursor:not-allowed;}
+  .dia-cell.active{border-color:var(--naranja);background:#fff;}
+  .dia-cell.done{background:var(--verde);border-color:var(--verde);}
+  .dia-cell.done .dia-num{color:#fff;}
+  .dia-num{font-size:11px;font-weight:500;color:var(--negro);}
+  .dia-check{font-size:12px;color:#fff;margin-top:1px;}
+
+  .card-dia{background:#fff;border-radius:16px;border:2px solid var(--negro);padding:1.5rem;margin-top:1.25rem;}
+
+  .semana-badge{display:inline-block;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;padding:3px 12px;border-radius:20px;margin-bottom:12px;}
+  .badge-s1{background:var(--naranja);color:#fff;}
+  .badge-s2{background:var(--azul);color:#fff;}
+  .badge-s3{background:var(--violeta);color:#fff;}
+
+  .dia-titulo{font-size:13px;font-weight:500;color:rgba(10,10,10,.4);margin-bottom:4px;}
+  .dia-frase{font-size:18px;font-weight:500;color:var(--negro);line-height:1.5;margin-bottom:1.25rem;font-style:italic;}
+
+  .preguntas{display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem;}
+  .pregunta{background:var(--fondo);border-radius:12px;padding:14px 16px;border-left:4px solid var(--gris2);}
+  .pregunta.p1{border-left-color:var(--naranja);}
+  .pregunta.p2{border-left-color:var(--amarillo-dark);}
+  .pregunta.p3{border-left-color:var(--violeta);}
+  .pregunta p{font-size:14px;color:var(--negro);line-height:1.6;}
+
+  .btn-completar{width:100%;padding:14px;background:var(--naranja);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;transition:all .15s;margin-top:.5rem;-webkit-tap-highlight-color:transparent;}
+  .btn-completar:hover{background:var(--naranja-dark);}
+  .btn-completar:active{transform:scale(.98);}
+
+  .done-card{background:var(--verde-light);border-radius:16px;border:2px solid var(--verde);padding:1.5rem;margin-top:1.25rem;text-align:center;}
+  .done-card .done-icon{font-size:32px;margin-bottom:8px;}
+  .done-card p{font-size:14px;color:#1a5c3a;line-height:1.6;}
+  .done-card .done-dia{font-size:12px;color:var(--verde);font-weight:500;margin-top:8px;}
+
+  .final-card{background:var(--negro);border-radius:16px;padding:1.75rem;margin-top:1.5rem;text-align:center;}
+  .final-card h2{font-size:20px;font-weight:500;color:var(--amarillo);margin-bottom:8px;}
+  .final-card p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.6;}
+
+  @media(max-width:400px){
+    .dia-frase{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Mi camino continúa</h1>
+    <p>21 días · un momento para vos · cada día</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="prog-top"><span>Progreso</span><strong id="progNum">0 / 21</strong></div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <div id="mainContent"></div>
+</div>
+
+<script>
+const dias=[
+  {s:1,frase:'Hoy empiezo a caminar sola hacia el cambio que necesito.',preguntas:['Ya tenés un compromiso. ¿Cómo lo vas a lograr?','¿Hoy lo hiciste?']},
+  {s:1,frase:'El cuerpo recuerda lo que la mente olvida.',preguntas:['¿Qué te dijo tu cuerpo hoy?','¿Lo escuchaste?']},
+  {s:1,frase:'No hay nada que corregir. Solo volver a habitar.',preguntas:['¿Hubo un momento hoy en que te sentiste en casa dentro de vos?']},
+  {s:1,frase:'Decir que sí a todo cansa. Decir que no también es cuidarse.',preguntas:['¿Hoy dijiste sí por compromiso o por miedo a perder algo?','¿Qué hubieras querido decir?']},
+  {s:1,frase:'La felicidad no siempre grita. A veces es un momento chiquito.',preguntas:['¿Cuál fue el momento del día en que te sentiste más vos?']},
+  {s:1,frase:'Comer es también un acto de amor propio.',preguntas:['¿Hoy te alimentaste con presencia?','¿O fue en automático?']},
+  {s:1,frase:'Una semana recorrida. Nada es poco.',preguntas:['¿Qué aprendiste de vos esta semana?','¿Qué te llevás?']},
+  {s:2,frase:'La mirada que te dirigís a vos misma lo cambia todo.',preguntas:['¿Cómo te miraste hoy?','¿Con juicio o con curiosidad?']},
+  {s:2,frase:'El cambio no empieza con fuerza. Empieza con una decisión pequeña.',preguntas:['¿Qué decisión chiquita tomaste hoy por vos?']},
+  {s:2,frase:'Tu historia no te define. Te trajo hasta acá.',preguntas:['¿Hay algo del pasado que hoy seguís cargando sin necesidad?']},
+  {s:2,frase:'El cuerpo que tenés hoy hizo todo lo que pudo.',preguntas:['¿Qué le agradecés a tu cuerpo hoy?']},
+  {s:2,frase:'Soltar no es olvidar. Es elegir no seguir cargando.',preguntas:['¿Hay algo que hoy puedas dejar ir, aunque sea un poco?']},
+  {s:2,frase:'Moverse es volver.',preguntas:['¿Hoy le diste a tu cuerpo algún momento de movimiento, placer o descanso?']},
+  {s:2,frase:'Dos semanas. Eso no es poca cosa.',preguntas:['¿Qué cambió en vos desde el día 1?','¿Qué sigue igual y está bien así?']},
+  {s:3,frase:'Lo que cultivás hoy, mañana florece.',preguntas:['¿Qué semilla pequeña plantaste hoy para tu bienestar?']},
+  {s:3,frase:'No necesitás ser otra para merecer cuidado.',preguntas:['¿Qué hiciste hoy por vos?','¿Qué te faltó?']},
+  {s:3,frase:'Los vínculos también son espejo.',preguntas:['¿Cómo te trataron hoy?','¿Cómo te trataste vos?']},
+  {s:3,frase:'Hay una voz adentro que sabe lo que necesitás.',preguntas:['¿La escuchaste hoy?','¿Qué te dijo?']},
+  {s:3,frase:'El compromiso con una misma es el más importante.',preguntas:['¿Hoy honraste algo que te prometiste?','¿Qué quedó pendiente?']},
+  {s:3,frase:'Casi llegás. Y el camino ya te transformó.',preguntas:['¿En qué sos distinta hoy a la que empezó el día 1?']},
+  {s:3,frase:'Llegaste. Este es solo el comienzo.',preguntas:['¿Qué te llevás?','¿A qué te comprometés seguir cultivando?']},
+];
+
+const semanas={
+  1:{label:'Semana 1 — Raíz',badge:'badge-s1'},
+  2:{label:'Semana 2 — Mirada nueva',badge:'badge-s2'},
+  3:{label:'Semana 3 — Integración',badge:'badge-s3'}
+};
+const pcolors=['p1','p2','p3'];
+
+const KEY='desafio21_v1';
+let st;
+try{st=JSON.parse(localStorage.getItem(KEY))||null;}catch(e){}
+if(!st)st={done:[],activeDay:1};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+
+function isDone(d){return st.done.includes(d);}
+function completar(d){
+  if(!isDone(d)){st.done.push(d);if(d<21)st.activeDay=d+1;}
+  save();render();
+}
+function setActive(d){
+  const max=st.done.length>0?Math.max(...st.done)+1:1;
+  if(d>max&&!isDone(d))return;
+  st.activeDay=d;save();render();
+}
+
+function render(){
+  const doneCnt=st.done.length;
+  document.getElementById('progNum').textContent=doneCnt+' / 21';
+  document.getElementById('progFill').style.width=Math.round((doneCnt/21)*100)+'%';
+
+  let html='';
+
+  [1,2,3].forEach(function(s){
+    const inicio=(s-1)*7;
+    html+='<div class="semana-label">'+semanas[s].label+'</div><div class="dias-grid">';
+    for(var i=inicio;i<inicio+7;i++){
+      var d=i+1;
+      var done=isDone(d);
+      var active=st.activeDay===d;
+      var max=st.done.length>0?Math.max.apply(null,st.done)+1:1;
+      var locked=d>max&&!done;
+      html+='<div class="dia-cell '+(done?'done':active?'active':locked?'locked':'')+'" onclick="setActive('+d+')">'+
+        '<div class="dia-num">'+(done?'':d)+'</div>'+
+        (done?'<div class="dia-check">✓</div>':'')+
+      '</div>';
+    }
+    html+='</div>';
+  });
+
+  var d=st.activeDay;
+  var dia=dias[d-1];
+  var done=isDone(d);
+  var sem=semanas[dia.s];
+
+  if(doneCnt===21){
+    html+='<div class="final-card"><h2>¡Lo lograste! 🎉</h2><p>21 días de presencia, honestidad y compromiso con vos misma. Eso no se borra. Llevalo con vos.</p></div>';
+  } else if(done){
+    html+='<div class="done-card"><div class="done-icon">✓</div><p>Ya reflexionaste sobre este día. Seguí cuando estés lista.</p><div class="done-dia">Día '+d+' completado</div></div>';
+  } else {
+    html+='<div class="card-dia">'+
+      '<span class="semana-badge '+sem.badge+'">'+sem.label+'</span>'+
+      '<div class="dia-titulo">Día '+d+'</div>'+
+      '<div class="dia-frase">'+dia.frase+'</div>'+
+      '<div class="preguntas">'+
+        dia.preguntas.map(function(p,i){return '<div class="pregunta '+pcolors[i]+'"><p>'+p+'</p></div>';}).join('')+
+      '</div>'+
+      '<button class="btn-completar" onclick="completar('+d+')">Cerrar este día</button>'+
+    '</div>';
+  }
+
+  document.getElementById('mainContent').innerHTML=html;
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FF5400">
+<title>Chispas del taller</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --naranja:#FF5400;--naranja-light:#FFE8DC;
+    --amarillo:#FFBE0B;--amarillo-light:#FFF6D0;--amarillo-dark:#B38000;
+    --violeta:#8338EC;--violeta-light:#EFE0FF;
+    --azul:#3A86FF;--azul-light:#DCEEFF;
+    --negro:#0A0A0A;--fondo:#FFFBF0;--gris:#F0EBE0;--gris2:#D9D2C5;
+    --verde:#00A86B;--verde-light:#D0F5E8;
+  }
+  body{background:var(--fondo);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
+  .wrap{max-width:600px;margin:0 auto;padding:1.5rem 1rem 3rem;}
+
+  .header{text-align:center;margin-bottom:2rem;padding:1.5rem;background:var(--negro);border-radius:16px;}
+  .header h1{font-size:20px;font-weight:500;color:#fff;}
+  .header p{font-size:13px;color:var(--amarillo);margin-top:4px;}
+
+  .progreso-general{margin-bottom:1.5rem;}
+  .prog-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(10,10,10,.45);margin-bottom:6px;}
+  .prog-bar{height:6px;background:var(--gris);border-radius:3px;overflow:hidden;}
+  .prog-fill{height:100%;background:var(--naranja);border-radius:3px;transition:width .4s;}
+
+  .semanas{display:flex;flex-direction:column;gap:1.25rem;}
+  .semana-card{border-radius:16px;overflow:hidden;border:2px solid transparent;}
+  .semana-card.s1{border-color:var(--naranja);}
+  .semana-card.s2{border-color:var(--amarillo-dark);}
+  .semana-card.s3{border-color:var(--azul);}
+  .semana-card.s4{border-color:var(--violeta);}
+
+  .semana-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .s1 .semana-header{background:var(--naranja-light);}
+  .s2 .semana-header{background:var(--amarillo-light);}
+  .s3 .semana-header{background:var(--azul-light);}
+  .s4 .semana-header{background:var(--violeta-light);}
+
+  .semana-meta{display:flex;align-items:center;gap:10px;}
+  .semana-icon{font-size:22px;}
+  .semana-num{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;opacity:.55;color:var(--negro);}
+  .semana-titulo{font-size:14px;font-weight:500;color:var(--negro);margin-top:1px;}
+  .semana-status{display:flex;align-items:center;gap:6px;}
+  .chispa-dots{display:flex;gap:4px;}
+  .chispa-dot{width:9px;height:9px;border-radius:50%;background:var(--gris2);}
+  .chispa-dot.abierta{background:var(--naranja);}
+  .chispa-dot.leida{background:var(--verde);}
+  .chevron{font-size:16px;color:var(--negro);opacity:.4;transition:transform .2s;margin-left:4px;}
+  .semana-card.open .chevron{transform:rotate(180deg);}
+
+  .semana-body{display:none;padding:16px;background:#fff;}
+  .semana-card.open .semana-body{display:block;}
+
+  .encuentro-tag{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:14px;font-weight:500;}
+  .s1 .encuentro-tag{background:var(--naranja);color:#fff;}
+  .s2 .encuentro-tag{background:var(--amarillo);color:var(--amarillo-dark);}
+  .s3 .encuentro-tag{background:var(--azul);color:#fff;}
+  .s4 .encuentro-tag{background:var(--violeta);color:#fff;}
+
+  .sobre-wrap{margin-bottom:10px;}
+  .sobre{border-radius:12px;overflow:hidden;border:1.5px solid var(--gris2);}
+  .sobre-cerrado{padding:16px;background:var(--gris);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .sobre-cerrado-left{display:flex;align-items:center;gap:10px;}
+  .sobre-icono{font-size:22px;}
+  .sobre-hint{font-size:13px;color:rgba(10,10,10,.45);font-style:italic;}
+
+  .btn-chispa{padding:9px 18px;border-radius:20px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+  .btn-chispa:active{transform:scale(.97);}
+  .s1 .btn-chispa{background:var(--naranja);}
+  .s2 .btn-chispa{background:var(--amarillo-dark);}
+  .s3 .btn-chispa{background:var(--azul);}
+  .s4 .btn-chispa{background:var(--violeta);}
+
+  .sobre-abierto{display:none;padding:16px;background:#fff;}
+  .sobre.abierto .sobre-cerrado{display:none;}
+  .sobre.abierto .sobre-abierto{display:block;}
+  .sobre.leida .sobre-abierto{background:var(--verde-light);}
+
+  .chispa-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--gris2);margin-bottom:8px;}
+  .chispa-texto{font-size:14px;color:var(--negro);line-height:1.7;font-style:italic;margin-bottom:14px;}
+  .sobre.leida .chispa-texto{color:#1a5c3a;}
+
+  .btn-marcar{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:1.5px solid var(--gris2);background:transparent;font-size:12px;color:rgba(10,10,10,.5);cursor:pointer;transition:all .15s;}
+  .btn-marcar:hover{border-color:var(--verde);color:var(--verde);}
+  .sobre.leida .btn-marcar{border-color:var(--verde);color:var(--verde);}
+
+  @media(max-width:400px){
+    .sobre-cerrado{flex-direction:column;align-items:flex-start;gap:10px;}
+    .btn-chispa{width:100%;text-align:center;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Chispas de la semana</h1>
+    <p>Abrí la que necesitás, cuando la necesitás</p>
+  </div>
+
+  <div class="progreso-general">
+    <div class="prog-label">
+      <span>Chispas recibidas</span>
+      <span id="progPct">0 de 8</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="semanas" id="semanasWrap"></div>
+</div>
+
+<script>
+const data=[
+  {num:1,titulo:'Volver a habitar el cuerpo',icon:'🌊',cls:'s1',encuentro:'Encuentro 1',
+    chispas:[
+      'Esta semana todas estamos aprendiendo a escuchar. Hoy, un momento tuyo: cerrá los ojos, respirá, y preguntate ¿cómo estoy? Sin filtro. Solo vos.',
+      'Tu cuerpo sabe más de lo que creés. Hoy prestale atención a algo chiquito: un hombro tenso, un suspiro, una sonrisa. Eso también es reconectarse.'
+    ]},
+  {num:2,titulo:'Abrazo mi historia corporal',icon:'🪶',cls:'s2',encuentro:'Encuentro 2',
+    chispas:[
+      'Esta semana estamos aprendiendo a agradecer lo que fue. ¿Qué le dirías hoy a tu cuerpo de antes? Una sola palabra alcanza.',
+      'Soltar no es fácil, pero no estás sola en esto. Hoy, una respiración profunda y una frase: "Gracias por traerme hasta acá." Eso es todo.'
+    ]},
+  {num:3,titulo:'El cuerpo que soy hoy',icon:'🌿',cls:'s3',encuentro:'Encuentro 3',
+    chispas:[
+      'Esta semana estamos mirando el cuerpo que somos hoy. ¿Qué parte tuya está pidiendo un poco de atención? Dásela, sin juzgar.',
+      'Cambiar la mirada es el primer paso. Hoy elegí una parte de vos y mirala con curiosidad, no con crítica. El grupo está haciendo lo mismo.'
+    ]},
+  {num:4,titulo:'Mi nuevo pacto conmigo',icon:'✨',cls:'s4',encuentro:'Encuentro 4',
+    chispas:[
+      'Llegamos juntas hasta acá. Pausá un momento y preguntate: ¿qué me llevo de estas semanas? Una palabra, una imagen, una sensación. Eso es tuyo para siempre.',
+      '¿Qué querés seguir cultivando? Elegí algo chiquito, tuyo, posible. Ese es tu pacto. Y nosotras estamos para acompañarlo.'
+    ]}
+];
+
+const KEY='chispas_v2';
+let st;
+try{st=JSON.parse(localStorage.getItem(KEY))||null;}catch(e){}
+if(!st)st={abiertas:{},leidas:{},openSemana:1};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+
+function isAbierta(s,c){return !!(st.abiertas[s]&&st.abiertas[s].includes(c));}
+function isLeida(s,c){return !!(st.leidas[s]&&st.leidas[s].includes(c));}
+function abrirChispa(s,c){
+  if(!st.abiertas[s])st.abiertas[s]=[];
+  if(!st.abiertas[s].includes(c))st.abiertas[s].push(c);
+  save();render();
+}
+function toggleLeida(s,c){
+  if(!st.leidas[s])st.leidas[s]=[];
+  const arr=st.leidas[s],i=arr.indexOf(c);
+  if(i>=0)arr.splice(i,1);else arr.push(c);
+  save();render();
+}
+function toggleSemana(n){
+  st.openSemana=st.openSemana===n?null:n;
+  save();render();
+}
+function totalAbiertas(){return Object.values(st.abiertas).reduce((a,b)=>a+b.length,0);}
+
+function render(){
+  const total=totalAbiertas();
+  document.getElementById('progPct').textContent=total+' de 8';
+  document.getElementById('progFill').style.width=Math.round((total/8)*100)+'%';
+
+  document.getElementById('semanasWrap').innerHTML=data.map(s=>{
+    const isOpen=st.openSemana===s.num;
+    const dots=s.chispas.map((_,i)=>{
+      const leida=isLeida(s.num,i),abierta=isAbierta(s.num,i);
+      return '<div class="chispa-dot '+(leida?'leida':abierta?'abierta':'')+'"></div>';
+    }).join('');
+
+    const sobresHTML=s.chispas.map((txt,i)=>{
+      const abierta=isAbierta(s.num,i),leida=isLeida(s.num,i);
+      return '<div class="sobre-wrap"><div class="sobre '+(abierta?'abierta':'')+' '+(leida?'leida':'')+'">'+
+        '<div class="sobre-cerrado">'+
+          '<div class="sobre-cerrado-left"><div class="sobre-icono">💌</div>'+
+          '<div class="sobre-hint">Chispa '+(i+1)+' — tocá cuando la necesitás</div></div>'+
+          '<button class="btn-chispa" onclick="abrirChispa('+s.num+','+i+')">Necesito esta chispa</button>'+
+        '</div>'+
+        '<div class="sobre-abierto">'+
+          '<div class="chispa-label">Chispa '+(i+1)+'</div>'+
+          '<div class="chispa-texto">'+txt+'</div>'+
+          '<button class="btn-marcar" onclick="toggleLeida('+s.num+','+i+')">'+(leida?'✓ Recibida':'Marcar como recibida')+'</button>'+
+        '</div>'+
+      '</div></div>';
+    }).join('');
+
+    return '<div class="semana-card '+s.cls+' '+(isOpen?'open':'')+'">'+
+      '<div class="semana-header" onclick="toggleSemana('+s.num+')">'+
+        '<div class="semana-meta">'+
+          '<div class="semana-icon">'+s.icon+'</div>'+
+          '<div><div class="semana-num">Semana '+s.num+'</div>'+
+          '<div class="semana-titulo">'+s.titulo+'</div></div>'+
+        '</div>'+
+        '<div class="semana-status"><div class="chispa-dots">'+dots+'</div>'+
+        '<div class="chevron">▾</div></div>'+
+      '</div>'+
+      '<div class="semana-body"><span class="encuentro-tag">'+s.encuentro+'</span>'+sobresHTML+'</div>'+
+    '</div>';
+  }).join('');
+}
+render();
+</script>
+</body>
+</html>
