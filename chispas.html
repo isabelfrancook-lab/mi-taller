@@ -17,81 +17,72 @@
   }
   body{background:var(--fondo);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
   .wrap{max-width:600px;margin:0 auto;padding:1.5rem 1rem 3rem;}
-
   .header{text-align:center;margin-bottom:2rem;padding:1.5rem;background:var(--negro);border-radius:16px;}
   .header h1{font-size:20px;font-weight:500;color:#fff;}
   .header p{font-size:13px;color:var(--amarillo);margin-top:4px;}
-
-  .progreso-general{margin-bottom:1.5rem;}
-  .prog-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(10,10,10,.45);margin-bottom:6px;}
+  .prog-wrap{margin-bottom:1.5rem;}
+  .prog-top{display:flex;justify-content:space-between;font-size:12px;color:rgba(10,10,10,.45);margin-bottom:6px;}
   .prog-bar{height:6px;background:var(--gris);border-radius:3px;overflow:hidden;}
   .prog-fill{height:100%;background:var(--naranja);border-radius:3px;transition:width .4s;}
-
   .semanas{display:flex;flex-direction:column;gap:1.25rem;}
-  .semana-card{border-radius:16px;overflow:hidden;border:2px solid transparent;}
-  .semana-card.s1{border-color:var(--naranja);}
-  .semana-card.s2{border-color:var(--amarillo-dark);}
-  .semana-card.s3{border-color:var(--azul);}
-  .semana-card.s4{border-color:var(--violeta);}
 
-  .semana-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-  .s1 .semana-header{background:var(--naranja-light);}
-  .s2 .semana-header{background:var(--amarillo-light);}
-  .s3 .semana-header{background:var(--azul-light);}
-  .s4 .semana-header{background:var(--violeta-light);}
+  .semana{border-radius:16px;overflow:hidden;border:2px solid transparent;}
+  .semana.s1{border-color:var(--naranja);}
+  .semana.s2{border-color:var(--amarillo-dark);}
+  .semana.s3{border-color:var(--azul);}
+  .semana.s4{border-color:var(--violeta);}
 
-  .semana-meta{display:flex;align-items:center;gap:10px;}
-  .semana-icon{font-size:22px;}
-  .semana-num{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;opacity:.55;color:var(--negro);}
-  .semana-titulo{font-size:14px;font-weight:500;color:var(--negro);margin-top:1px;}
-  .semana-status{display:flex;align-items:center;gap:6px;}
-  .chispa-dots{display:flex;gap:4px;}
-  .chispa-dot{width:9px;height:9px;border-radius:50%;background:var(--gris2);}
-  .chispa-dot.abierta{background:var(--naranja);}
-  .chispa-dot.leida{background:var(--verde);}
-  .chevron{font-size:16px;color:var(--negro);opacity:.4;transition:transform .2s;margin-left:4px;}
-  .semana-card.open .chevron{transform:rotate(180deg);}
+  .s-head{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;-webkit-user-select:none;}
+  .s1 .s-head{background:var(--naranja-light);}
+  .s2 .s-head{background:var(--amarillo-light);}
+  .s3 .s-head{background:var(--azul-light);}
+  .s4 .s-head{background:var(--violeta-light);}
 
-  .semana-body{display:none;padding:16px;background:#fff;}
-  .semana-card.open .semana-body{display:block;}
+  .s-meta{display:flex;align-items:center;gap:10px;pointer-events:none;}
+  .s-icon{font-size:22px;}
+  .s-num{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;opacity:.55;color:var(--negro);}
+  .s-titulo{font-size:14px;font-weight:500;color:var(--negro);margin-top:1px;}
+  .s-right{display:flex;align-items:center;gap:6px;pointer-events:none;}
+  .dots{display:flex;gap:4px;}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--gris2);}
+  .dot.abierta{background:var(--naranja);}
+  .dot.leida{background:var(--verde);}
+  .chevron{font-size:14px;color:var(--negro);opacity:.4;transition:transform .2s;margin-left:4px;}
+  .semana.open .chevron{transform:rotate(180deg);}
 
-  .encuentro-tag{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:14px;font-weight:500;}
-  .s1 .encuentro-tag{background:var(--naranja);color:#fff;}
-  .s2 .encuentro-tag{background:var(--amarillo);color:var(--amarillo-dark);}
-  .s3 .encuentro-tag{background:var(--azul);color:#fff;}
-  .s4 .encuentro-tag{background:var(--violeta);color:#fff;}
+  .s-body{display:none;background:#fff;padding:16px;}
+  .semana.open .s-body{display:block;}
 
-  .sobre-wrap{margin-bottom:10px;}
-  .sobre{border-radius:12px;overflow:hidden;border:1.5px solid var(--gris2);}
-  .sobre-cerrado{padding:16px;background:var(--gris);display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .sobre-cerrado-left{display:flex;align-items:center;gap:10px;}
-  .sobre-icono{font-size:22px;}
-  .sobre-hint{font-size:13px;color:rgba(10,10,10,.45);font-style:italic;}
+  .etag{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-bottom:14px;font-weight:500;}
+  .s1 .etag{background:var(--naranja);color:#fff;}
+  .s2 .etag{background:var(--amarillo);color:var(--amarillo-dark);}
+  .s3 .etag{background:var(--azul);color:#fff;}
+  .s4 .etag{background:var(--violeta);color:#fff;}
 
-  .btn-chispa{padding:9px 18px;border-radius:20px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
-  .btn-chispa:active{transform:scale(.97);}
-  .s1 .btn-chispa{background:var(--naranja);}
-  .s2 .btn-chispa{background:var(--amarillo-dark);}
-  .s3 .btn-chispa{background:var(--azul);}
-  .s4 .btn-chispa{background:var(--violeta);}
+  .sobre{border-radius:12px;overflow:hidden;border:1.5px solid var(--gris2);margin-bottom:10px;}
 
-  .sobre-abierto{display:none;padding:16px;background:#fff;}
-  .sobre.abierto .sobre-cerrado{display:none;}
-  .sobre.abierto .sobre-abierto{display:block;}
-  .sobre.leida .sobre-abierto{background:var(--verde-light);}
+  .sobre-front{padding:14px 16px;background:var(--gris);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .sobre-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+  .sobre-emoji{font-size:20px;flex-shrink:0;}
+  .sobre-hint{font-size:13px;color:rgba(10,10,10,.4);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-  .chispa-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--gris2);margin-bottom:8px;}
-  .chispa-texto{font-size:14px;color:var(--negro);line-height:1.7;font-style:italic;margin-bottom:14px;}
-  .sobre.leida .chispa-texto{color:#1a5c3a;}
+  .btn-abrir{flex-shrink:0;padding:9px 16px;border-radius:20px;border:none;font-size:13px;font-weight:500;cursor:pointer;color:#fff;touch-action:manipulation;}
+  .s1 .btn-abrir{background:var(--naranja);}
+  .s2 .btn-abrir{background:var(--amarillo-dark);}
+  .s3 .btn-abrir{background:var(--azul);}
+  .s4 .btn-abrir{background:var(--violeta);}
 
-  .btn-marcar{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:1.5px solid var(--gris2);background:transparent;font-size:12px;color:rgba(10,10,10,.5);cursor:pointer;transition:all .15s;}
-  .btn-marcar:hover{border-color:var(--verde);color:var(--verde);}
+  .sobre-back{display:none;padding:16px;background:#fff;}
+  .sobre.abierta .sobre-front{display:none;}
+  .sobre.abierta .sobre-back{display:block;}
+  .sobre.leida .sobre-back{background:var(--verde-light);}
+
+  .c-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--gris2);margin-bottom:8px;}
+  .c-texto{font-size:14px;color:var(--negro);line-height:1.7;font-style:italic;margin-bottom:14px;}
+  .sobre.leida .c-texto{color:#1a5c3a;}
+
+  .btn-marcar{padding:8px 16px;border-radius:20px;border:1.5px solid var(--gris2);background:transparent;font-size:12px;color:rgba(10,10,10,.5);cursor:pointer;touch-action:manipulation;}
   .sobre.leida .btn-marcar{border-color:var(--verde);color:var(--verde);}
-
-  @media(max-width:400px){
-    .sobre-cerrado{flex-direction:column;align-items:flex-start;gap:10px;}
-    .btn-chispa{width:100%;text-align:center;}
-  }
 </style>
 </head>
 <body>
@@ -100,108 +91,125 @@
     <h1>Chispas de la semana</h1>
     <p>Abrí la que necesitás, cuando la necesitás</p>
   </div>
-
-  <div class="progreso-general">
-    <div class="prog-label">
-      <span>Chispas recibidas</span>
-      <span id="progPct">0 de 8</span>
-    </div>
+  <div class="prog-wrap">
+    <div class="prog-top"><span>Chispas recibidas</span><span id="progNum">0 de 8</span></div>
     <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
   </div>
-
-  <div class="semanas" id="semanasWrap"></div>
+  <div class="semanas" id="root"></div>
 </div>
-
 <script>
-const data=[
-  {num:1,titulo:'Volver a habitar el cuerpo',icon:'🌊',cls:'s1',encuentro:'Encuentro 1',
+var data=[
+  {id:1,titulo:'Volver a habitar el cuerpo',icon:'🌊',cls:'s1',enc:'Encuentro 1',
     chispas:[
       'Esta semana todas estamos aprendiendo a escuchar. Hoy, un momento tuyo: cerrá los ojos, respirá, y preguntate ¿cómo estoy? Sin filtro. Solo vos.',
       'Tu cuerpo sabe más de lo que creés. Hoy prestale atención a algo chiquito: un hombro tenso, un suspiro, una sonrisa. Eso también es reconectarse.'
     ]},
-  {num:2,titulo:'Abrazo mi historia corporal',icon:'🪶',cls:'s2',encuentro:'Encuentro 2',
+  {id:2,titulo:'Abrazo mi historia corporal',icon:'🪶',cls:'s2',enc:'Encuentro 2',
     chispas:[
       'Esta semana estamos aprendiendo a agradecer lo que fue. ¿Qué le dirías hoy a tu cuerpo de antes? Una sola palabra alcanza.',
       'Soltar no es fácil, pero no estás sola en esto. Hoy, una respiración profunda y una frase: "Gracias por traerme hasta acá." Eso es todo.'
     ]},
-  {num:3,titulo:'El cuerpo que soy hoy',icon:'🌿',cls:'s3',encuentro:'Encuentro 3',
+  {id:3,titulo:'El cuerpo que soy hoy',icon:'🌿',cls:'s3',enc:'Encuentro 3',
     chispas:[
       'Esta semana estamos mirando el cuerpo que somos hoy. ¿Qué parte tuya está pidiendo un poco de atención? Dásela, sin juzgar.',
       'Cambiar la mirada es el primer paso. Hoy elegí una parte de vos y mirala con curiosidad, no con crítica. El grupo está haciendo lo mismo.'
     ]},
-  {num:4,titulo:'Mi nuevo pacto conmigo',icon:'✨',cls:'s4',encuentro:'Encuentro 4',
+  {id:4,titulo:'Mi nuevo pacto conmigo',icon:'✨',cls:'s4',enc:'Encuentro 4',
     chispas:[
       'Llegamos juntas hasta acá. Pausá un momento y preguntate: ¿qué me llevo de estas semanas? Una palabra, una imagen, una sensación. Eso es tuyo para siempre.',
       '¿Qué querés seguir cultivando? Elegí algo chiquito, tuyo, posible. Ese es tu pacto. Y nosotras estamos para acompañarlo.'
     ]}
 ];
 
-const KEY='chispas_v2';
-let st;
-try{st=JSON.parse(localStorage.getItem(KEY))||null;}catch(e){}
-if(!st)st={abiertas:{},leidas:{},openSemana:1};
+var KEY='chispas_v3';
+var st;
+try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+if(!st)st={abiertas:{},leidas:{},open:1};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
 
-function isAbierta(s,c){return !!(st.abiertas[s]&&st.abiertas[s].includes(c));}
-function isLeida(s,c){return !!(st.leidas[s]&&st.leidas[s].includes(c));}
-function abrirChispa(s,c){
-  if(!st.abiertas[s])st.abiertas[s]=[];
-  if(!st.abiertas[s].includes(c))st.abiertas[s].push(c);
+function isAb(s,c){return st.abiertas[s]&&st.abiertas[s].indexOf(c)>=0;}
+function isLe(s,c){return st.leidas[s]&&st.leidas[s].indexOf(c)>=0;}
+
+function abrir(sid,cid){
+  if(!st.abiertas[sid])st.abiertas[sid]=[];
+  if(st.abiertas[sid].indexOf(cid)<0)st.abiertas[sid].push(cid);
   save();render();
 }
-function toggleLeida(s,c){
-  if(!st.leidas[s])st.leidas[s]=[];
-  const arr=st.leidas[s],i=arr.indexOf(c);
-  if(i>=0)arr.splice(i,1);else arr.push(c);
+function marcar(sid,cid){
+  if(!st.leidas[sid])st.leidas[sid]=[];
+  var a=st.leidas[sid],i=a.indexOf(cid);
+  if(i>=0)a.splice(i,1);else a.push(cid);
   save();render();
 }
-function toggleSemana(n){
-  st.openSemana=st.openSemana===n?null:n;
+function toggle(sid){
+  st.open=st.open===sid?null:sid;
   save();render();
 }
-function totalAbiertas(){return Object.values(st.abiertas).reduce((a,b)=>a+b.length,0);}
+
+function totalAb(){
+  var t=0;
+  Object.keys(st.abiertas).forEach(function(k){t+=st.abiertas[k].length;});
+  return t;
+}
 
 function render(){
-  const total=totalAbiertas();
-  document.getElementById('progPct').textContent=total+' de 8';
-  document.getElementById('progFill').style.width=Math.round((total/8)*100)+'%';
+  var total=totalAb();
+  document.getElementById('progNum').textContent=total+' de 8';
+  document.getElementById('progFill').style.width=Math.round(total/8*100)+'%';
 
-  document.getElementById('semanasWrap').innerHTML=data.map(s=>{
-    const isOpen=st.openSemana===s.num;
-    const dots=s.chispas.map((_,i)=>{
-      const leida=isLeida(s.num,i),abierta=isAbierta(s.num,i);
-      return '<div class="chispa-dot '+(leida?'leida':abierta?'abierta':'')+'"></div>';
-    }).join('');
-
-    const sobresHTML=s.chispas.map((txt,i)=>{
-      const abierta=isAbierta(s.num,i),leida=isLeida(s.num,i);
-      return '<div class="sobre-wrap"><div class="sobre '+(abierta?'abierta':'')+' '+(leida?'leida':'')+'">'+
-        '<div class="sobre-cerrado">'+
-          '<div class="sobre-cerrado-left"><div class="sobre-icono">💌</div>'+
-          '<div class="sobre-hint">Chispa '+(i+1)+' — tocá cuando la necesitás</div></div>'+
-          '<button class="btn-chispa" onclick="event.stopPropagation();abrirChispa('+s.num+','+i+')">Necesito esta chispa</button>'+
+  var html='';
+  data.forEach(function(s){
+    var isOpen=st.open===s.id;
+    var dotsh='';
+    s.chispas.forEach(function(_,i){
+      var le=isLe(s.id,i),ab=isAb(s.id,i);
+      dotsh+='<div class="dot '+(le?'leida':ab?'abierta':'')+'"></div>';
+    });
+    var sobres='';
+    s.chispas.forEach(function(txt,i){
+      var ab=isAb(s.id,i),le=isLe(s.id,i);
+      sobres+='<div class="sobre '+(ab?'abierta ':'')+' '+(le?'leida':'')+'" id="sobre-'+s.id+'-'+i+'">'+
+        '<div class="sobre-front">'+
+          '<div class="sobre-left"><span class="sobre-emoji">💌</span><span class="sobre-hint">Chispa '+(i+1)+' — tocá cuando la necesitás</span></div>'+
+          '<button class="btn-abrir" id="btn-'+s.id+'-'+i+'">Necesito esta chispa</button>'+
         '</div>'+
-        '<div class="sobre-abierto">'+
-          '<div class="chispa-label">Chispa '+(i+1)+'</div>'+
-          '<div class="chispa-texto">'+txt+'</div>'+
-          '<button class="btn-marcar" onclick="toggleLeida('+s.num+','+i+')">'+(leida?'✓ Recibida':'Marcar como recibida')+'</button>'+
+        '<div class="sobre-back">'+
+          '<div class="c-label">Chispa '+(i+1)+'</div>'+
+          '<div class="c-texto">'+txt+'</div>'+
+          '<button class="btn-marcar" id="mrk-'+s.id+'-'+i+'">'+(le?'✓ Recibida':'Marcar como recibida')+'</button>'+
         '</div>'+
-      '</div></div>';
-    }).join('');
-
-    return '<div class="semana-card '+s.cls+' '+(isOpen?'open':'')+'">'+
-      '<div class="semana-header" onclick="toggleSemana('+s.num+')">'+
-        '<div class="semana-meta">'+
-          '<div class="semana-icon">'+s.icon+'</div>'+
-          '<div><div class="semana-num">Semana '+s.num+'</div>'+
-          '<div class="semana-titulo">'+s.titulo+'</div></div>'+
-        '</div>'+
-        '<div class="semana-status"><div class="chispa-dots">'+dots+'</div>'+
-        '<div class="chevron">▾</div></div>'+
+      '</div>';
+    });
+    html+='<div class="semana '+s.cls+' '+(isOpen?'open':'')+'" id="sem-'+s.id+'">'+
+      '<div class="s-head" id="head-'+s.id+'">'+
+        '<div class="s-meta"><div class="s-icon">'+s.icon+'</div><div><div class="s-num">Semana '+s.id+'</div><div class="s-titulo">'+s.titulo+'</div></div></div>'+
+        '<div class="s-right"><div class="dots">'+dotsh+'</div><div class="chevron">▾</div></div>'+
       '</div>'+
-      '<div class="semana-body"><span class="encuentro-tag">'+s.encuentro+'</span>'+sobresHTML+'</div>'+
+      '<div class="s-body"><span class="etag">'+s.enc+'</span>'+sobres+'</div>'+
     '</div>';
-  }).join('');
+  });
+  document.getElementById('root').innerHTML=html;
+
+  // Eventos separados para evitar conflictos mobile
+  data.forEach(function(s){
+    document.getElementById('head-'+s.id).addEventListener('click',function(){toggle(s.id);});
+    s.chispas.forEach(function(_,i){
+      var btn=document.getElementById('btn-'+s.id+'-'+i);
+      if(btn){
+        btn.addEventListener('click',function(e){
+          e.stopPropagation();
+          abrir(s.id,i);
+        });
+      }
+      var mrk=document.getElementById('mrk-'+s.id+'-'+i);
+      if(mrk){
+        mrk.addEventListener('click',function(e){
+          e.stopPropagation();
+          marcar(s.id,i);
+        });
+      }
+    });
+  });
 }
 render();
 </script>
