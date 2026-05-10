@@ -179,7 +179,7 @@ function render(){
         '<div class="sobre-cerrado">'+
           '<div class="sobre-cerrado-left"><div class="sobre-icono">💌</div>'+
           '<div class="sobre-hint">Chispa '+(i+1)+' — tocá cuando la necesitás</div></div>'+
-          '<button class="btn-chispa" onclick="abrirChispa('+s.num+','+i+')">Necesito esta chispa</button>'+
+          '<button class="btn-chispa" onclick="event.stopPropagation();abrirChispa('+s.num+','+i+')">Necesito esta chispa</button>'+
         '</div>'+
         '<div class="sobre-abierto">'+
           '<div class="chispa-label">Chispa '+(i+1)+'</div>'+
